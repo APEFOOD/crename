@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# A simple script to convert all files in a directory from file extension 
+# to another (e.g. turn all JPEGs in this folder into PNG) 
+# Usage: `$ crename -i jpeg -o png` 
+
+while getopts ":i:o:" opt; do
+  case $opt in
+    i) input=$OPTARG ;;
+    o) output=$OPTARG ;;
+    \?) echo "Invalid option: -$OPTARG" >&2; exit 1 ;;
+    :) echo "Option -$OPTARG requires an argument." >&2; exit 1 ;;
+  esac
+done
+
+for file in *.$input; do 
+    mv -- "$file" "${file%.$input}.$output"
+done
